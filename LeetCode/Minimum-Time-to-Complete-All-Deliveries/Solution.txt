@@ -1,0 +1,39 @@
+class Solution {
+    public long minimumTime(int[] d, int[] r) {
+        long d1 = d[0] , d2 = d[1];
+        long r1 = r[0],r2=r[1];
+        long l=0,h=(long)1e18,ans=0;
+        long lcm=lcm(r1,r2);
+        while(l<=h){
+            long mid=l+(h-l)/2;
+            long deliver1=mid-mid/r1;
+            long deliver2= mid- mid/r2;
+            long bothRecharge = mid/lcm;
+            long totalDeliverable = mid- bothRecharge;
+            if(deliver1 >=d1 && deliver2 >= d2 && totalDeliverable >= d1+d2){
+                ans=mid;
+                h=mid-1;
+            } else{
+                l=mid+1;
+            }
+        }
+        return ans;
+        
+        
+    }
+    private Long gcd(long a,long b){
+        while(b !=0){
+            long t=b;
+            b=a%b;
+            a=t;
+        }
+        return a;
+    }
+    private long lcm(long a, long b){
+        return a/ gcd(a,b) * b;
+
+
+
+        
+    }
+}
