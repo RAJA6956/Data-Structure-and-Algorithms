@@ -1,8 +1,8 @@
-class Solution {
-    public int minimumOneBitOperations(int n) {
-        if (n == 0) return 0;
-        int msb = 31 - Integer.numberOfLeadingZeros(n);
-        int mask = 1 << msb;
-        return (1 << (msb + 1)) - 1 - minimumOneBitOperations(n ^ mask);
-    }
-}
+        8 = 15  1000: +(f(10000)-1) = 15
+        7 = 5    111: +(f(1000)-1) -((f(100)-1) -(f(10)-1)) = 7 - 3 + 1 = 5
+        6 = 4    110: +(f(1000)-1) -(f(100)-1) = 7 - 3 = 4
+        5 = 6    101: +(f(1000)-1) -(f(10)-1) = 7 - 1 = 6
+        4 = 7    100: +(f(1000)-1) = 7
+        3 = 2     11: +(f(100)-1) -(f(10)-1) = 3 - 1 = 2
+        2 = 3     10: +(f(100)-1) = 3
+        1 = 1      1: +(f(10)-1) = 1
