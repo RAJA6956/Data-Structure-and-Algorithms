@@ -7,6 +7,16 @@
 7  AND l2.num = l3.num;
 8
 9
-10
-11
-12
+10#mam's approach
+11#SELECT DISTINCT l1.num AS ConsecutiveNums
+12#from logs a
+13#join logs b
+14#on b.id=a.id+1 AND b.num=a.num
+15#join logs c
+16#on c.id=a.id+2  AND c.num=a.num;
+17
+18
+19
+20
+21
+22
