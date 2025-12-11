@@ -14,21 +14,50 @@
 14// }
 15
 16/// bottom up approach with space optimization
-17class Solution {
-18    public int climbStairs(int n) {
-19        if(n<=1) return 1;
-20        int first=1;
-21        int second=1;
-22        int ans=0;
-23        for(int i=2;i<=n;i++){
-24            ans=first+second;
-25            second=first;
-26            first=ans;
+17// class Solution {
+18//     public int climbStairs(int n) {
+19//         if(n<=1) return 1;
+20//         int first=1;
+21//         int second=1;
+22//         int ans=0;
+23//         for(int i=2;i<=n;i++){
+24//             ans=first+second;
+25//             second=first;
+26//             first=ans;
 27
-28        }
-29        return ans;
-30    }
+28//         }
+29//         return ans;
+30//     }
 31
-32}
+32// }
 33
 34
+35
+36/// write top down - memorization approach
+37class Solution {
+38    
+39
+40    public int climbStairs(int n) {
+41        int[] dp=new int[n+1];
+42        Arrays.fill(dp,-1);
+43        return solve(dp,n);
+44    }
+45    public int solve(int[] dp,int n){
+46        if(n<=1) return 1;
+47        if(dp[n] != -1) return dp[n];
+48
+49        return dp[n] = solve(dp,n-2) + solve(dp,n-1);
+50    }
+51}
+52
+53// Recursive approach
+54// class Solution {
+55
+56//     public int climbStairs(int n) {
+57//         if(n<=1) return 1;
+58//         int two=climbStairs(n-2);
+59//         int one=climbStairs(n-1);
+60//         return one+two;
+61//     }
+62// }
+63
