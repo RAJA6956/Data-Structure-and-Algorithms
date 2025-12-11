@@ -1,0 +1,64 @@
+1//Recursion
+2// class Solution {
+3//     int sum=0;
+4//     int curr=0;
+5//     public int minPathSum(int[][] grid) {
+6//         int m=grid.length;
+7//         int n=grid[0].length;
+8
+9
+10//         return solve(grid,0,0,m,n);
+11        
+12//     }
+13//     public int solve(int[][] grid,int i,int j,int m, int n ){
+14//         if(i<0 || i>=m || j <0 || j>=n) return Integer.MAX_VALUE;
+15//         if(i==m-1 && j ==n-1){
+16//             return grid[i][j];
+17            
+18//         }
+19        
+20        
+21        
+22//         int up = solve(grid,i+1,j,m,n);
+23//         int left = solve(grid,i,j+1,m,n);
+24
+25//         return grid[i][j] + Math.min(up,left);
+26         
+27
+28
+29//     }
+30// }
+31
+32// Memoization
+33
+34class Solution {
+35    public int minPathSum(int[][] grid) {
+36        int m=grid.length;
+37        int n=grid[0].length;
+38        int[][] dp= new int[m][n];
+39        for(int i=0;i<m;i++){
+40            for(int j=0;j<n;j++){
+41                dp[i][j] =-1;
+42            }
+43            
+44        }
+45        return solve(grid,dp,0,0,m,n);
+46        
+47    }
+48    public int solve(int[][] grid,int[][] dp,int i,int j,int m, int n ){
+49        if(i<0 || i>=m || j <0 || j>=n) return Integer.MAX_VALUE;
+50        if(i==m-1 && j ==n-1){
+51            return grid[i][j];
+52            
+53        }
+54        if(dp[i][j] != -1){
+55            return dp[i][j];
+56        }
+57        
+58        int up = solve(grid,dp,i+1,j,m,n);
+59        int left = solve(grid,dp,i,j+1,m,n);
+60
+61        return dp[i][j] =    grid[i][j] + Math.min(up,left);
+62         
+63    }
+64}
