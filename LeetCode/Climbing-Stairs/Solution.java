@@ -63,18 +63,43 @@
 63// }
 64
 65// Tabulation
-66class Solution {
+66// class Solution {
 67    
 68
-69    public int climbStairs(int n) {
-70        int[] dp=new int[n+1];
-71        dp[0]=1;
-72        dp[1]=1;
-73        for(int i =2; i<=n;i++){
-74            dp[i] = dp[i-1]+dp[i-2];
-75        }
-76        return dp[n];
+69//     public int climbStairs(int n) {
+70//         int[] dp=new int[n+1];
+71//         dp[0]=1;
+72//         dp[1]=1;
+73//         for(int i =2; i<=n;i++){
+74//             dp[i] = dp[i-1]+dp[i-2];
+75//         }
+76//         return dp[n];
 77    
-78    }
-79}
-80
+78//     }
+79// }
+80//space optimized
+81class Solution {
+82    
+83
+84    public int climbStairs(int n) {
+85        
+86        int first =1;
+87        int second=1;
+88        int curr;
+89        if(n<=1){
+90            curr=1;
+91        }else {
+92            curr = 0;
+93        }
+94        for(int i=2;i<=n;i++){
+95            curr = first + second;
+96            first = second;
+97            second = curr;
+98
+99
+100        }
+101        return curr;
+102    }
+103
+104}
+105
