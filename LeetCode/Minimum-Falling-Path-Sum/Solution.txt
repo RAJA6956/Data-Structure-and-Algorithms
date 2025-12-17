@@ -1,0 +1,102 @@
+1/// recursive approach
+2// class Solution {
+3//     public int minFallingPathSum(int[][] matrix) {
+4//         int sum=Integer.MAX_VALUE;
+5//         int n=matrix[0].length;
+6//         for(int i=0;i<n;i++){
+7//             int cost=solve(0,i,matrix,n);
+8//             if(cost<sum) {
+9//                 sum=cost;
+10//                 cost=Integer.MAX_VALUE;
+11//             }
+12//         }
+13//         return sum;
+14        
+15//     }
+16
+17//     public int solve(int i,int j,int[][] matrix,int n){
+18//         if(i<0 || i>=n || j <0 || j>=n) return Integer.MAX_VALUE;
+19//         if(i==n-1){
+20//             return matrix[i][j];
+21            
+22//         }
+23//         int same = solve(i+1,j,matrix,n);
+24//         int left = solve(i+1,j-1,matrix,n);
+25//         int right = solve(i+1,j+1,matrix,n);
+26//         int minVal = Math.min(same, Math.min(left, right));
+27
+28
+29//         return matrix[i][j] + minVal;
+30
+31
+32//     }
+33// }
+34
+35
+36//Memoization
+37// class Solution {
+38//     public int minFallingPathSum(int[][] matrix) {
+39//         int sum=Integer.MAX_VALUE;
+40//         int n=matrix[0].length;
+41//         int[][] dp =new int[n][n];
+42//         for (int i = 0; i < n; i++) {
+43//             Arrays.fill(dp[i], Integer.MAX_VALUE);
+44//         }
+45//         for(int i=0;i<n;i++){
+46//             int cost=solve(0,i,matrix,n,dp);
+47//             if(cost<sum) {
+48//                 sum=cost;
+49//                 cost=Integer.MAX_VALUE;
+50//             }
+51//         }
+52//         return sum;
+53        
+54//     }
+55
+56//     public int solve(int i,int j,int[][] matrix,int n,int[][] dp){
+57//         if(i<0 || i>=n || j <0 || j>=n) return Integer.MAX_VALUE;
+58//         if(i==n-1){
+59//             return matrix[i][j];
+60            
+61//         }
+62//         if(dp[i][j] !=Integer.MAX_VALUE ) return dp[i][j];
+63//         int same = solve(i+1,j,matrix,n,dp);
+64//         int left = solve(i+1,j-1,matrix,n,dp);
+65//         int right = solve(i+1,j+1,matrix,n,dp);
+66//         int minVal = Math.min(same, Math.min(left, right));
+67
+68
+69//         return dp[i][j] = matrix[i][j] + minVal;
+70
+71
+72//     }
+73// }
+74
+75
+76/// Bottom up approach- tabulation
+77class Solution {
+78    public int minFallingPathSum(int[][] matrix) {
+79        int n = matrix.length;
+80        int[][] dp = new int[n][n];
+81        // Base case-this is my  base case
+82        for (int j = 0; j < n; j++) {
+83            dp[0][j] = matrix[0][j];
+84        }
+85        //filling table , one row at a time
+86        for (int i = 1; i < n; i++) {
+87            for (int j = 0; j < n; j++) {
+88                int up = dp[i - 1][j];
+89                int upLeft = (j > 0) ? dp[i - 1][j - 1] : Integer.MAX_VALUE;
+90                int upRight = (j < n - 1) ? dp[i - 1][j + 1] : Integer.MAX_VALUE;
+91                dp[i][j] = matrix[i][j] + Math.min(up, Math.min(upLeft, upRight));
+92            }
+93        }
+94        //select the minimum - wahi  answer hoga
+95        int ans = Integer.MAX_VALUE;
+96        for (int j = 0; j < n; j++) {
+97            ans = Math.min(ans, dp[n - 1][j]);
+98        }
+99        return ans;
+100    }
+101}
+102
