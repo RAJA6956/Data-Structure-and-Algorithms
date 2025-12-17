@@ -70,33 +70,68 @@
 70
 71
 72
-73///memoization approach
+73///memoization approach- start from 0,0 and go to m-1,n-1
 74
-75class Solution {
-76    int m, n;
-77    int[][] memo;
-78    public int calculateMinimumHP(int[][] dungeon) {
-79        m = dungeon.length;
-80        n = dungeon[0].length;
-81        memo = new int[m][n];
-82        return dfs(0, 0, dungeon);
-83    }
-84    int dfs(int i, int j, int[][] dungeon) {
-85        if (i >= m || j >= n) {
-86            return Integer.MAX_VALUE;
-87        }
-88        if (memo[i][j] != 0) {
-89            return memo[i][j];
-90        }
-91        if (i == m - 1 && j == n - 1) {
-92            return memo[i][j] = Math.max(1, 1 - dungeon[i][j]);
-93        }
-94        int right = dfs(i, j + 1, dungeon);
-95        int down  = dfs(i + 1, j, dungeon);
-96        int minNext = Math.min(right, down);
-97        memo[i][j] = Math.max(1, minNext - dungeon[i][j]);
-98        return memo[i][j];
-99    }
-100}
+75// class Solution {
+76//     int m, n;
+77//     int[][] memo;
+78//     public int calculateMinimumHP(int[][] dungeon) {
+79//         m = dungeon.length;
+80//         n = dungeon[0].length;
+81//         memo = new int[m][n];
+82//         return dfs(0, 0, dungeon);
+83//     }
+84//     int dfs(int i, int j, int[][] dungeon) {
+85//         if (i >= m || j >= n) {
+86//             return Integer.MAX_VALUE;
+87//         }
+88//         if (memo[i][j] != 0) {
+89//             return memo[i][j];
+90//         }
+91//         if (i == m - 1 && j == n - 1) {
+92//             return memo[i][j] = Math.max(1, 1 - dungeon[i][j]);
+93//         }
+94//         int right = dfs(i, j + 1, dungeon);
+95//         int down  = dfs(i + 1, j, dungeon);
+96//         int minNext = Math.min(right, down);
+97//         memo[i][j] = Math.max(1, minNext - dungeon[i][j]);
+98//         return memo[i][j];
+99//     }
+100// }
 101
-102
+102/// atbulatio Approach or bOTom up approach
+103 class Solution {
+104    public int calculateMinimumHP(int[][] dungeon) {
+105        int m = dungeon.length;
+106        int n = dungeon[0].length;
+107
+108        int[][] dp = new int[m][n];
+109
+110        dp[m-1][n-1] = Math.max(1, 1 - dungeon[m-1][n-1]);
+111
+112        for (int j = n - 2; j >= 0; j--) {
+113            dp[m-1][j] = Math.max(
+114                1,
+115                dp[m-1][j + 1] - dungeon[m-1][j]
+116            );
+117        }
+118
+119        for (int i = m - 2; i >= 0; i--) {
+120            dp[i][n-1] = Math.max(
+121                1,
+122                dp[i + 1][n-1] - dungeon[i][n-1]
+123            );
+124        }
+125
+126        // Fill remaining cells
+127        for (int i = m - 2; i >= 0; i--) {
+128            for (int j = n - 2; j >= 0; j--) {
+129                int minNext = Math.min(dp[i + 1][j], dp[i][j + 1]);
+130                dp[i][j] = Math.max(1, minNext - dungeon[i][j]);
+131            }
+132        }
+133
+134        return dp[0][0];
+135    }
+136}
+137
