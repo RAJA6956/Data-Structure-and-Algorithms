@@ -45,33 +45,66 @@
 45// }
 46
 47// Memoization
-48class Solution {
+48// class Solution {
 49    
-50    public List<List<Integer>> generate(int numRows) {
-51        List<List<Integer>> result = new ArrayList<>();
-52        int[][] dp=new int[numRows][numRows];
+50//     public List<List<Integer>> generate(int numRows) {
+51//         List<List<Integer>> result = new ArrayList<>();
+52//         int[][] dp=new int[numRows][numRows];
 53        
-54        for (int i = 0; i < dp.length; i++) {
-55            Arrays.fill(dp[i],-1);
-56        }
+54//         for (int i = 0; i < dp.length; i++) {
+55//             Arrays.fill(dp[i],-1);
+56//         }
 57
 58        
-59        for(int i=0;i<numRows;i++){
-60            List<Integer> row = new ArrayList<>();
-61            for(int j=0;j<=i;j++){
-62                row.add(solve(i,j,dp));
-63            }
-64            result.add(row);
-65        }
-66        return result; 
-67    }
+59//         for(int i=0;i<numRows;i++){
+60//             List<Integer> row = new ArrayList<>();
+61//             for(int j=0;j<=i;j++){
+62//                 row.add(solve(i,j,dp));
+63//             }
+64//             result.add(row);
+65//         }
+66//         return result; 
+67//     }
 68
-69    public int solve(int i,int j,int[][] dp){
-70        if(j==0 || j==i){
-71            return 1;
-72        }
-73        if(dp[i][j] != -1) return dp[i][j];
-74        return dp[i][j] =solve(i-1,j-1,dp)+solve(i-1,j,dp);
-75    }
-76}
+69//     public int solve(int i,int j,int[][] dp){
+70//         if(j==0 || j==i){
+71//             return 1;
+72//         }
+73//         if(dp[i][j] != -1) return dp[i][j];
+74//         return dp[i][j] =solve(i-1,j-1,dp)+solve(i-1,j,dp);
+75//     }
+76// }
 77
+78//Tabulation
+79
+80class Solution {
+81    
+82    public List<List<Integer>> generate(int numRows) {
+83        List<List<Integer>> result = new ArrayList<>();
+84        int[][] dp=new int[numRows][numRows];
+85        
+86        for (int i = 0; i < dp.length; i++) {
+87            Arrays.fill(dp[i],-1);
+88        }
+89
+90        
+91        for(int i=0;i<numRows;i++){
+92            List<Integer> row = new ArrayList<>();
+93            for(int j=0;j<=i;j++){
+94                row.add(solve(i,j,dp));
+95            }
+96            result.add(row);
+97        }
+98        return result; 
+99    }
+100
+101    public int solve(int i,int j,int[][] dp){
+102        if(j==0 || j==i){
+103            return 1;
+104        }
+105        if(dp[i][j] != -1) return dp[i][j];
+106        return dp[i][j] =solve(i-1,j-1,dp)+solve(i-1,j,dp);
+107    }
+108}
+109
+110
