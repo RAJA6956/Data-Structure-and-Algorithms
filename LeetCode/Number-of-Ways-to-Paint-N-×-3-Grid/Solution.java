@@ -16,4 +16,3 @@
 16        return (int)((same + diff) % MOD);
 17    }
 18}
-19
