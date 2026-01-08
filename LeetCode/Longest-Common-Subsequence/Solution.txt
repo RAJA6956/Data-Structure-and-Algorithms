@@ -1,0 +1,70 @@
+1// recursive approach
+2// class Solution {
+3//     int ans=0;
+4//     public int longestCommonSubsequence(String text1, String text2) {
+5//         int m=text1.length(),n=text2.length();
+6//         return solve(0,0,text1,text2);
+7        
+8//     }
+9//     public int solve(int i, int j, String text1, String text2){
+10//         if(i==text1.length() || j==text2.length()) return 0;
+11
+12//         if(text1.charAt(i)==text2.charAt(j)) return 1+ solve(i+1,j+1,text1,text2);
+13
+14//         return Math.max(solve(i+1,j,text1,text2), solve (i,j+1,text1,text2));
+15        
+16//     }
+17// }
+18
+19
+20// memoization aoproaches
+21//  class Solution {
+22//     int [][] dp;
+23//     public int longestCommonSubsequence(String text1, String text2) {
+24//         int m=text1.length(),n=text2.length();
+25//         dp=new int[m][n];
+26//         for(int i=0;i<m;i++){
+27//             Arrays.fill(dp[i],-1);
+28//         }
+29//         return solve(0,0,text1,text2);
+30        
+31//     }
+32//     public int solve(int i, int j, String text1, String text2){
+33//         if(i==text1.length() || j==text2.length()) return 0;
+34//         if(dp[i][j] != -1) return dp[i][j];
+35
+36//         if(text1.charAt(i)==text2.charAt(j)) dp[i][j]= 1+ solve(i+1,j+1,text1,text2);
+37//         else{
+38//             dp[i][j]= Math.max(solve(i+1,j,text1,text2), solve (i,j+1,text1,text2));
+39//         }
+40
+41//         return dp[i][j];
+42        
+43//     }
+44// }
+45
+46
+47//Tabulation
+48class Solution {
+49    public int longestCommonSubsequence(String text1, String text2) {
+50        int n = text1.length();
+51        int m = text2.length();
+52
+53        int[][] dp = new int[n + 1][m + 1];
+54        for (int i = n - 1; i >= 0; i--) {
+55            for (int j = m - 1; j >= 0; j--) {
+56                if (text1.charAt(i) == text2.charAt(j)) {
+57                    dp[i][j] = 1 + dp[i + 1][j + 1];
+58                } else {
+59                    dp[i][j] = Math.max(
+60                            dp[i + 1][j],
+61                            dp[i][j + 1]
+62                    );
+63                }
+64            }
+65        }
+66
+67        return dp[0][0];
+68    }
+69}
+70
