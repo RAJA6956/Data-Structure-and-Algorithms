@@ -1,0 +1,1 @@
+return (word1.size()+word2.size())-2*lcs(word1,word2))
