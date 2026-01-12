@@ -1,0 +1,98 @@
+1//recursive approch
+2// class Solution {
+3//     public int lengthOfLIS(int[] nums,int k) {
+4//         return solve(0, -1, nums,k);
+5//     }
+6//     private int solve(int i, int prev, int[] nums,int k) {
+7//         if (i==nums.length) return 0;
+8//         int skip = solve(i + 1, prev, nums,k);
+9//         int take = 0;
+10//         if(prev==-1) take = 1 + solve(i + 1, i, nums,k);
+11//         else if ( nums[i] > nums[prev] && nums[i] - nums[prev] <= k) {
+12//             take = 1 + solve(i + 1, i, nums,k);
+13            
+14//         }
+15//         return Math.max(take, skip);
+16//     }
+17// }
+18
+19
+20
+21//memoization aprioach
+22// class Solution {
+23//     int[][] dp;
+24//     public int lengthOfLIS(int[] nums , int k) {
+25//         int n = nums.length;
+26//         dp = new int[n][n + 1];
+27//         for (int i = 0; i < n; i++) {
+28//             Arrays.fill(dp[i], -1);
+29//         }
+30//         return solve(0, -1, nums,k);
+31//     }
+32//     private int solve(int i, int prev, int[] nums,int k) {
+33//         if (i == nums.length) return 0;
+34//         if (dp[i][prev + 1] != -1) return dp[i][prev + 1];
+35//         int skip = solve(i + 1, prev, nums,k);
+36//         int take = 0;
+37//         if(prev == -1) take=1+ solve(i+1,i,nums,k);
+38//         else if (nums[i] > nums[prev] && nums[i] - nums[prev] <= k) {
+39//             take = 1 + solve(i + 1, i, nums,k);
+40//         }
+41//         return dp[i][prev + 1] = Math.max(take, skip);
+42//     }
+43// }
+44
+45
+46// tabulation
+47class Solution {
+48    int[] seg;
+49
+50    public int lengthOfLIS(int[] nums, int k) {
+51        int maxVal = 100000;
+52        seg = new int[4 * maxVal];
+53        int ans = 0;
+54
+55        for (int num : nums) {
+56            int left = Math.max(1, num - k);
+57            int right = num - 1;
+58
+59            int best = 0;
+60            if (left <= right) {
+61                best = query(1, 1, maxVal, left, right);
+62            }
+63
+64            int curr = best + 1;
+65            update(1, 1, maxVal, num, curr);
+66
+67            ans = Math.max(ans, curr);
+68        }
+69        return ans;
+70    }
+71
+72    private void update(int node, int start, int end, int idx, int val) {
+73        if (start == end) {
+74            seg[node] = Math.max(seg[node], val);
+75            return;
+76        }
+77
+78        int mid = (start + end) / 2;
+79        if (idx <= mid)
+80            update(2 * node, start, mid, idx, val);
+81        else
+82            update(2 * node + 1, mid + 1, end, idx, val);
+83
+84        seg[node] = Math.max(seg[2 * node], seg[2 * node + 1]);
+85    }
+86
+87    private int query(int node, int start, int end, int l, int r) {
+88        if (r < start || end < l) return 0;
+89        if (l <= start && end <= r) return seg[node];
+90
+91        int mid = (start + end) / 2;
+92        return Math.max(
+93            query(2 * node, start, mid, l, r),
+94            query(2 * node + 1, mid + 1, end, l, r)
+95        );
+96    }
+97}
+98
