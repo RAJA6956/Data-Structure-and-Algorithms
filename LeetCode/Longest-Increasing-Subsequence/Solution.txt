@@ -1,0 +1,63 @@
+1// recursive approach - it will TLE
+2// class Solution {
+3//     public int lengthOfLIS(int[] nums) {
+4//         return solve(0, -1, nums);
+5//     }
+6//     private int solve(int i, int prev, int[] nums) {
+7//         if (i==nums.length) return 0;
+8//         int skip = solve(i + 1, prev, nums);
+9//         int take = 0;
+10//         if (prev == -1 || nums[i] > nums[prev]) {
+11//             take = 1 + solve(i + 1, i, nums);
+12//         }
+13//         return Math.max(take, skip);
+14//     }
+15// }
+16
+17// memoization aprioach
+18// class Solution {
+19//     int[][] dp;
+20//     public int lengthOfLIS(int[] nums) {
+21//         int n = nums.length;
+22//         dp = new int[n][n + 1];
+23//         for (int i = 0; i < n; i++) {
+24//             Arrays.fill(dp[i], -1);
+25//         }
+26//         return solve(0, -1, nums);
+27//     }
+28//     private int solve(int i, int prev, int[] nums) {
+29//         if (i == nums.length) return 0;
+30//         if (dp[i][prev + 1] != -1) return dp[i][prev + 1];
+31//         int skip = solve(i + 1, prev, nums);
+32//         int take = 0;
+33//         if (prev == -1 || nums[i] > nums[prev]) {
+34//             take = 1 + solve(i + 1, i, nums);
+35//         }
+36//         return dp[i][prev + 1] = Math.max(take, skip);
+37//     }
+38// }
+39
+40
+41// Tabulation approach
+42class Solution {
+43    public int lengthOfLIS(int[] nums) {
+44        int n=nums.length;
+45        int[] dp=new int[n];
+46        Arrays.fill(dp, 1);
+47        for (int i = 0; i < n; i++) {
+48            for (int j = 0; j < i; j++) {
+49                if (nums[j] < nums[i]) {
+50                    dp[i] = Math.max(dp[i], dp[j] + 1);
+51                }
+52            }
+53        }
+54        int ans = 0;
+55        for (int len : dp) {
+56            ans = Math.max(ans, len);
+57        }
+58
+59        return ans;
+60                
+61    }
+62}
+63
