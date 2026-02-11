@@ -1,0 +1,32 @@
+1class Solution {
+2    public int numIslands(char[][] grid) {
+3        if (grid == null || grid.length == 0) return 0;
+4        int m = grid.length;
+5        int n = grid[0].length;
+6        int islands = 0;
+7        for (int i = 0; i < m; i++) {
+8            for (int j = 0; j < n; j++) {
+9                if (grid[i][j] == '1') {
+10                    islands++;
+11                    dfs(grid, i, j);
+12                }
+13            }
+14        }
+15        return islands;
+16    }
+17
+18    private void dfs(char[][] grid, int r, int c) {
+19        ///check that if you found water 
+20        if (r < 0 || c < 0 || r >= grid.length || c >= grid[0].length
+21                || grid[r][c] == '0') {
+22            return;
+23        }
+24        grid[r][c]='0';
+25        // try to explore the other neighbours of current node in all 4 direction
+26        dfs(grid,r+1,c);
+27        dfs(grid,r-1,c);
+28        dfs(grid,r,c+1);
+29        dfs(grid,r,c-1);
+30    }
+31}
+32
