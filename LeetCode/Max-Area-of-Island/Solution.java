@@ -1,27 +1,33 @@
 1class Solution {
-2    public int maxAreaOfIsland(int[][] grid) {
-3        int Area_max=0;
-4        for (int i=0; i<grid.length;i++) {
-5            for (int j = 0; j < grid[0].length; j++) {
-6                if (grid[i][j] == 1) {
-7                    Area_max = Math.max(Area_max, dfs(grid, i, j));
-8                }
-9            }
-10        }
-11        return Area_max;
-12    }
-13    private int dfs(int[][] grid, int r, int c) {
-14        if (r < 0 || c < 0 || r >= grid.length || c >= grid[0].length
-15                || grid[r][c] == 0) {
-16            return 0;
-17        }
-18        //mark the current island visited
-19        grid[r][c] = 0;
-20        return 1
-21                + dfs(grid, r + 1, c)
-22                + dfs(grid, r - 1, c)
-23                + dfs(grid, r, c + 1)
-24                + dfs(grid, r, c - 1);
-25    }
-26}
-27
+2    int[] dr={-1,1,0,0};
+3    int [] dc={0,0,-1,1};
+4    public int maxAreaOfIsland(int[][] grid) {
+5        int n=grid.length;
+6        int m=grid[0].length;
+7        int maxArea=0;
+8        for(int i=0;i<n;i++){
+9            for(int j=0;j<m;j++){
+10                if(grid[i][j]==1){
+11                    maxArea=Math.max(maxArea,dfs(grid,i,j));
+12                }
+13            }
+14        }
+15        return maxArea;
+16
+17        
+18    }
+19    public int dfs(int[][] grid,int row,int col){
+20        int n=grid.length;
+21        int m=grid[0].length;
+22        if(row<0  || row>=n || col<0 || col>=m) return 0;
+23        if(grid[row][col]==0) return 0;
+24        grid[row][col]=0;
+25        int count=1;
+26        for(int i=0;i<4;i++){
+27            count += dfs(grid,row +dr[i],col +dc[i]);
+28        }
+29        return count;
+30
+31
+32    }
+33}
