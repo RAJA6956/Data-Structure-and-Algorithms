@@ -1,0 +1,19 @@
+1class Solution {
+2    public double champagneTower(int poured, int query_row, int query_glass) {
+3        double[][] dp = new double[101][101];
+4        dp[0][0] = poured;
+5
+6        for (int r = 0; r <= query_row; r++) {
+7            for (int c = 0; c <= r; c++) {
+8                if (dp[r][c] > 1) {
+9                    double overflow = (dp[r][c] - 1) / 2.0;
+10                    dp[r][c] = 1;
+11                    dp[r + 1][c] += overflow;
+12                    dp[r + 1][c + 1] += overflow;
+13                }
+14            }
+15        }
+16
+17        return Math.min(1, dp[query_row][query_glass]);
+18    }
+19}
