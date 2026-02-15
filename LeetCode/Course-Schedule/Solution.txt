@@ -1,0 +1,39 @@
+1class Solution {
+2    public boolean canFinish(int numCourses, int[][] prerequisites) {
+3        ArrayList<ArrayList<Integer>> list=new ArrayList<>();
+4        for(int i=0;i<numCourses;i++){
+5            list.add(new ArrayList<>());
+6        }
+7        for(int[] edge: prerequisites ){
+8            list.get(edge[1]).add(edge[0]);
+9        }
+10        boolean[] visited=new boolean[numCourses];
+11        boolean[] recStack=new boolean[numCourses];
+12        for(int i=0;i<numCourses;i++){
+13            if(!visited[i]){
+14                if(dfs(i,visited,recStack,list)){
+15                    return false;
+16                }
+17            }
+18        }
+19        return true;
+20        
+21    }
+22    public boolean dfs(int node,boolean[] visited,boolean[] recStack,ArrayList<ArrayList<Integer>> list){
+23        visited[node]=true;
+24        recStack[node]=true;
+25
+26        for(int neighbours:list.get(node)){
+27            if(!visited[neighbours]){
+28                if(dfs(neighbours,visited,recStack,list)){
+29                    return true;
+30                }
+31            }
+32            else if(recStack[neighbours]){
+33                return true;
+34            }
+35        }
+36        recStack[node]=false;
+37        return false;
+38    }
+39}
