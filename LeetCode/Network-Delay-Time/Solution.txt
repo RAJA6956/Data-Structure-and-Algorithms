@@ -1,0 +1,107 @@
+1// import java.util.*;
+2// class Solution {
+3//     public class Pair {
+4//         int node;
+5//         int weight;
+6
+7//         public Pair(int weight,int node ) {
+8//             this.node = node;
+9//             this.weight = weight;
+10//         }
+11//     }
+12//     public int networkDelayTime(int[][] times, int n, int k) {
+13//         Scanner io=new Scanner(System.in);
+14//         ArrayList<ArrayList<Pair>> list = new ArrayList<>();
+15//         boolean[] visited = new boolean[n+1];
+16
+17//         for (int i = 0; i <=n; i++) list.add(new ArrayList<>());
+18//         for(int[] edge:times){
+19//             int u=edge[0];
+20//             int v=edge[1];
+21//             int weight=edge[2];
+22//             list.get(u).add(new Pair(weight,v));
+23//         }
+24//         int[] dist=new int[n+1];
+25//         Arrays.fill(dist,Integer.MAX_VALUE);
+26//         dist[1]=0;
+27//         PriorityQueue<Pair> pq=new PriorityQueue<>((a,b)->a.weight-b.weight);
+28//         pq.add(new Pair(1,0));
+29//         while (!pq.isEmpty()) {
+30
+31//             Pair current = pq.poll();
+32
+33//             int currentNode = current.node;
+34//             int currentWeight = current.weight;
+35//             if(visited[currentNode]) continue;
+36
+37//             if (currentWeight > dist[currentNode]) continue;
+38
+39//             for (Pair neighbour : list.get(currentNode)) {
+40
+41//                 int newDist = currentWeight + neighbour.weight;
+42
+43//                 if (newDist < dist[neighbour.node]) {
+44//                     dist[neighbour.node] = newDist;
+45//                     pq.add(new Pair(newDist, neighbour.node));
+46//                 }
+47//             }
+48//         }
+49//         int max=dist[0];
+50//         for (int i = 1; i <= n; i++) {
+51//             if(dist[i]>max) max=dist[i];
+52            
+53//         }
+54//         return max;
+55
+56
+57//     }
+58        
+59// }
+60
+61
+62class Solution {
+63    class Pair{
+64        int node;
+65        int weight;
+66        Pair(int node,int weight){
+67            this.node=node;
+68            this.weight=weight;
+69        }
+70    }
+71    public int networkDelayTime(int[][] times, int n, int k) {
+72        int row= times.length;
+73        List<List<Pair>> adj= new ArrayList<>();
+74        PriorityQueue<Pair> pq= new PriorityQueue<>((a,b)->(a.weight-b.weight));
+75        boolean visited[]= new boolean[n+1];
+76        int count=0;
+77        for(int i=0;i<=n;i++){
+78            adj.add(new ArrayList<>());
+79        }
+80
+81        for(int i=0;i<row;i++){
+82            adj.get(times[i][0]).add(new Pair(times[i][1],times[i][2]));
+83        }
+84
+85        pq.add(new Pair(k,0));
+86        while(!pq.isEmpty()){
+87            Pair p= pq.remove();
+88            int curr=p.node;
+89            int wt=p.weight;
+90            if(!visited[curr]){
+91                count++;
+92                if(count==n){
+93                    return wt;
+94                }
+95                visited[curr]=true;
+96                for(Pair pr: adj.get(curr)){
+97                    if(!visited[pr.node]){
+98                        pq.add(new Pair(pr.node,pr.weight+wt));
+99                    }
+100                }
+101            }
+102        }
+103
+104    return -1;
+105    }
+106}
+107
