@@ -1,0 +1,13 @@
+1class Solution {
+2    public int minPartitions(String n) {
+3        int val=0;
+4
+5        for(char c:n.toCharArray()){
+6            val = Math.max(val, c-'0');
+7            
+8            if(val==9) return 9;
+9        }
+10
+11        return val;
+12    }
+13}
