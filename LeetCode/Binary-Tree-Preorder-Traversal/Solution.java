@@ -13,24 +13,19 @@
 13 *     }
 14 * }
 15 */
-16import java.util.*;
-17
-18class Solution {
-19    public List<Integer> preorderTraversal(TreeNode root) {
-20        List<Integer> result = new ArrayList<>();
-21        if (root == null) return result;
+16class Solution {
+17    List<Integer> ans=new ArrayList<>();
+18    public List<Integer> preorderTraversal(TreeNode root) {
+19        dfs(root);
+20        return ans;
+21
 22
-23        Stack<TreeNode> stack = new Stack<>();
-24        stack.push(root);
-25
-26        while (!stack.isEmpty()) {
-27            TreeNode node = stack.pop();
-28            result.add(node.val);
-29
-30            if (node.right != null) stack.push(node.right);
-31            if (node.left != null) stack.push(node.left);
-32        }
-33        return result;
-34    }
-35}
-36
+23        
+24    }
+25    public void dfs(TreeNode root){
+26        if(root==null) return;
+27        ans.add(root.val);
+28        dfs(root.left);
+29        dfs(root.right);
+30    }
+31}
