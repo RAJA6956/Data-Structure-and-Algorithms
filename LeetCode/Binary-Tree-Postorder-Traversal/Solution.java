@@ -13,24 +13,17 @@
 13 *     }
 14 * }
 15 */
-16import java.util.*;
-17
-18class Solution {
-19    public List<Integer> postorderTraversal(TreeNode root) {
-20        LinkedList<Integer> result = new LinkedList<>();
-21        if (root == null) return result;
-22
-23        Stack<TreeNode> stack = new Stack<>();
-24        stack.push(root);
-25
-26        while (!stack.isEmpty()) {
-27            TreeNode node = stack.pop();
-28            result.addFirst(node.val); // add to front (reverses order)
-29
-30            if (node.left != null) stack.push(node.left);
-31            if (node.right != null) stack.push(node.right);
-32        }
-33        return result;
-34    }
-35}
-36
+16class Solution {
+17    ArrayList<Integer> result=new ArrayList<>();
+18    public List<Integer> postorderTraversal(TreeNode root) {
+19        dfs(root);
+20        return result;
+21        
+22    }
+23    public void dfs(TreeNode root){
+24        if(root==null) return;
+25        dfs(root.left);
+26        dfs(root.right);
+27        result.add(root.val);
+28    }
+29}
