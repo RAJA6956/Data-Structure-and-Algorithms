@@ -15,28 +15,11 @@
 15 */
 16class Solution {
 17    public int minDepth(TreeNode root) {
-18        if (root == null) return 0;
-19
-20        Queue<TreeNode> q = new LinkedList<>();
-21        q.offer(root);
-22        int depth = 1;
-23
-24        while (!q.isEmpty()) {
-25            int size = q.size();
-26            for (int i = 0; i < size; i++) {
-27                TreeNode node = q.poll();
-28
-29                // if it's a leaf, we found our exit — time to leave the forest
-30                if (node.left == null && node.right == null) {
-31                    return depth;
-32                }
-33
-34                if (node.left != null) q.offer(node.left);
-35                if (node.right != null) q.offer(node.right);
-36            }
-37            depth++;
-38        }
-39
-40        return depth;
-41    }
-42}
+18        if(root==null) return 0;
+19        int left=minDepth(root.left);
+20        int right=minDepth(root.right);
+21        if(left==0 || right==0) return Math.max(left,right)+1;
+22        return 1+Math.min(left,right);
+23        
+24    }
+25}
