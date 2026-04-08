@@ -1,0 +1,1 @@
+nums[idx] = (nums[idx] * vi) % (1e9 + 7)
