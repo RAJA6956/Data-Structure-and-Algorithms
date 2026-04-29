@@ -15,28 +15,24 @@
 15 */
 16class Solution {
 17    public List<Integer> rightSideView(TreeNode root) {
-18        List<Integer> res=new ArrayList<>();
-19        
-20        if (root == null) return res;
-21        Queue<TreeNode> queue = new ArrayDeque<>();
-22        queue.add(root);
-23        while (!queue.isEmpty()) {
-24            int size = queue.size();
-25            while (size > 0) {
-26                TreeNode node = queue.poll();
-27                if(size==1) res.add(node.val);
-28                if (node.left != null) queue.add(node.left);
-29                if (node.right != null) queue.add(node.right);
-30                size--;
-31            }
-32        }
-33        return res;
-34
-35        
-36    }
-37}
-38
-39
-40
-41
-42
+18        List<Integer> ans=new ArrayList<>();
+19        if(root==null) return ans;
+20
+21        Queue<TreeNode> q=new LinkedList<>();
+22        q.add(root);
+23
+24        while(! q.isEmpty()){
+25            int size=q.size();
+26            for(int i=0;i<size;i++){
+27                TreeNode node=q.poll();
+28                if(i==size-1) ans.add(node.val);
+29
+30                if(node.left != null) q.add(node.left);
+31                if(node.right != null) q.add(node.right);
+32            }
+33        }
+34        return ans;
+35
+36        
+37    }
+38}
