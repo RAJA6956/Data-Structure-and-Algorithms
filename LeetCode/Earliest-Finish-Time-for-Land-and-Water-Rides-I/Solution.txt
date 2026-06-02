@@ -1,0 +1,72 @@
+1// class Solution {
+2//     public int earliestFinishTime(int[] landStartTime, int[] landDuration, int[] waterStartTime, int[] waterDuration) {
+3//         int n=landStartTime.length;
+4//         int m=waterStartTime.length;
+5//         int curr=Integer.MAX_VALUE;
+6
+7//         // Try every combination and save the most minnimum time while computing;
+8
+9//         //option A--- Land & then water
+10//         for(int i=0;i<n;i++){
+11//             int t=landStartTime[i]+landDuration[i];
+12
+13//             for(int j=0;j<m;j++){
+14//                 int currstrt=t;
+15//                 if(waterStartTime[j]<= currstrt){
+16//                     currstrt += waterDuration[j];
+17//                 }else{
+18//                     currstrt=waterStartTime[j]+waterDuration[j];
+19//                 }
+20//                 curr=Math.min(curr,Math.max(t,currstrt));
+21//             }
+22
+23//         }
+24
+25//         //option B---water & then Land
+26//         for(int i=0;i<m;i++){
+27//             int t=waterStartTime[i]+waterDuration[i];
+28//             for(int j=0;j<n;j++){
+29//                 int currstrt=t;
+30//                 if(landStartTime[j]<= currstrt){
+31//                     currstrt += landDuration[j];
+32//                 }else{
+33//                     currstrt = landStartTime[j]+landDuration[j];
+34//                 }
+35//                 curr=Math.min(curr,Math.max(t,currstrt));
+36
+37//             }
+38//         }
+39
+40//         return curr;
+41
+42
+43
+44        
+45//     }
+46// }
+47
+48class Solution {
+49    public int earliestFinishTime(int[] landStartTime, int[] landDuration, int[] waterStartTime, int[] waterDuration) {
+50
+51        int mfl = Integer.MAX_VALUE;
+52        int mfw = Integer.MAX_VALUE;
+53        int n=landStartTime.length;
+54        int m=waterStartTime.length;
+55        int ans=Integer.MAX_VALUE;
+56
+57
+58        for (int i = 0; i < n; i++)
+59            mfl = Math.min(mfl, landStartTime[i] + landDuration[i]);
+60
+61        for (int i = 0; i < m; i++)
+62            ans = Math.min(ans, Math.max(mfl, waterStartTime[i]) + waterDuration[i]);
+63
+64        for (int i = 0; i < m; i++)
+65            mfw = Math.min(mfw, waterStartTime[i] + waterDuration[i]);
+66
+67        for (int i = 0; i < n; i++)
+68            ans = Math.min(ans, Math.max(mfw, landStartTime[i]) + landDuration[i]);
+69
+70        return ans;
+71    }
+72}
